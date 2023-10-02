@@ -1,0 +1,17 @@
+upstream wordpress_backend {
+    server 172.31.36.99:80;
+    server 172.31.46.198:80;
+}
+
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://wordpress_backend;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+
+
